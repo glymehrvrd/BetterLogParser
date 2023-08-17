@@ -38,7 +38,7 @@ class BetterLogParser {
             } else {
               throw new Error("expect '[', actually meet '" + char + "'");
             }
-          } else if (char === ']') {
+          } else if (char === ']' || (char === '|' && currentKey !== '')) {
             if (currentKey) {
               if (isKey) {
                 currentObj = currentKey;
@@ -58,6 +58,7 @@ class BetterLogParser {
               currentObj = obj;
               isArray = is_array;
             }
+            isKey = true;
           } else if (char === '=') {
             if (currentKey === "") {
               throw new Error("empty key");
@@ -69,16 +70,34 @@ class BetterLogParser {
           } else if (char === '|') {
             isKey = true;
           } else if (char === ',' && i + 1 < s.length && s[i + 1] === ' ') {
-            i++;
-            isArray = true;
+            if (currentKey) {
+              if (isKey) {
+                currentObj = currentKey;
+              } else {
+                currentObj[currentKey] = currentValue;
+              }
+              currentKey = '';
+              currentValue = '';
+            }
             currentObjArr.push(currentObj);
             currentObj = {};
+            i++;
+            isArray = true;
+            isKey = true;
           } else {
             if (isKey) {
               currentKey += char;
             } else {
               currentValue += char;
             }
+          }
+        }
+
+        if (currentKey !== '') {
+          if (isKey) {
+            currentObj = currentKey;
+          } else {
+            currentObj[currentKey] = currentValue;
           }
         }
       
