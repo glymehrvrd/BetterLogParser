@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text protobuf parser</title>
+    <style>
+        .text-box {
+            height: 100%;
+            padding: 10px 10px 10px 30px;
+            border-radius: 0;
+            resize: none;
+            outline: none;
+            border: 2px solid rgb(238, 238, 238);
+        }
+    </style>
+    <script src="better_log_parser.js"></script>
+    <script>
+        function parseLog() {
+            const src = document.querySelector('#log_src').value
+            const out_container = document.querySelector('#parse_result')
+            out_container.value = ''
+            console.log('src: ' + src)
+            const parser = new BetterLogParser()
+            let msg = {}
+            try {
+                parser.parseInto(src, msg)
+            } catch (e) {
+                out_container.value = e + '\n\n'
+            } finally {
+                out_container.value += JSON.stringify(msg, null, 2)
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="main" style="width: 90%; height: 90%; position: absolute">
+    <button onclick="parseLog()" style="display: block">
+        Parse
+    </button>
+    <textarea id="log_src" class="text-box" style="width: 40%; display: inline-block" placeholder="input here..." ></textarea>
+    <textarea id="parse_result" class="text-box" style="width: 40%; display: inline-block"></textarea>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "main": "index.html",
+  "logo": "logo.png",
+  "features": [
+    {
+      "code": "main-pretty",
+      "explain": "美化日志格式产生的输出，如 a=[xxx]|b=[yyy]，使用=分割key与value，使用|分割多个kv-pair",
+      "cmds": [
+        "BetterLog 美化",
+        "BetterLog 美化"
+      ]
+    },
+    {
+      "code": "input-pretty",
+      "cmds": [
+        {
+          "type": "regex",
+          "label": "BetterLog 美化",
+          "match": "/^[\\s]*[\\w]+[\\s]*[=].+/",
+          "minLength": 3
+        }
+      ]
+    },
+    {
+      "code": "input-openInJsonEditor",
+      "cmds": [
+        {
+          "type": "regex",
+          "label": "BetterLog 转 JSON",
+          "match": "/^[\\s]*[\\w]+[\\s]*[=].+/",
+          "minLength": 3
+        }
+      ]
+    }
+  ],
+  "pluginSetting": {
+    "single": false
+  }
+}
