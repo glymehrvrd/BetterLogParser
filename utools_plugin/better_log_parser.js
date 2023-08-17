@@ -38,7 +38,7 @@ class BetterLogParser {
             } else {
               throw new Error("expect '[', actually meet '" + char + "'");
             }
-          } else if (char === ']' || (char === '|' && currentKey !== '')) {
+          } else if (char === ']') {
             if (currentKey) {
               if (isKey) {
                 currentObj = currentKey;
@@ -68,6 +68,15 @@ class BetterLogParser {
             }
             isKey = false;
           } else if (char === '|') {
+            if (currentKey) {
+              if (isKey) {
+                currentObj = currentKey;
+              } else {
+                currentObj[currentKey] = currentValue;
+              }
+              currentKey = '';
+              currentValue = '';
+            }
             isKey = true;
           } else if (char === ',' && i + 1 < s.length && s[i + 1] === ' ') {
             if (currentKey) {
